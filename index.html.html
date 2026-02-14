@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colleges | NEXUS Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/colleges.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-layer-group"></i>
+                <span>NEXUS</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="users.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Users</span>
+                <span class="badge">2.4K</span>
+            </a>
+            <a href="hosts.html" class="nav-item">
+                <i class="fas fa-user-tie"></i>
+                <span>Hosts</span>
+                <span class="badge">89</span>
+            </a>
+            <a href="fests.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Fests</span>
+                <span class="badge">156</span>
+            </a>
+            <a href="colleges.html" class="nav-item active">
+                <i class="fas fa-university"></i>
+                <span>Colleges</span>
+                <span class="badge">48</span>
+            </a>
+            <a href="bookings.html" class="nav-item">
+                <i class="fas fa-ticket-alt"></i>
+                <span>Bookings</span>
+            </a>
+            <a href="payments.html" class="nav-item">
+                <i class="fas fa-rupee-sign"></i>
+                <span>Payments</span>
+            </a>
+            <a href="analytics.html" class="nav-item">
+                <i class="fas fa-chart-pie"></i>
+                <span>Analytics</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="admin-profile">
+                <img src="https://ui-avatars.com/api/?name=Admin&background=6366f1&color=fff" alt="Admin">
+                <div class="admin-info">
+                    <div class="admin-name">Super Admin</div>
+                    <div class="admin-role">Administrator</div>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search colleges by name, location, or code..." id="collegeSearch">
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <button class="icon-btn" onclick="openImportModal()" title="Import Colleges">
+                    <i class="fas fa-file-import"></i>
+                </button>
+                <button class="icon-btn" onclick="exportColleges()" title="Export Colleges">
+                    <i class="fas fa-file-export"></i>
+                </button>
+                <button class="icon-btn" onclick="toggleNotifications()" title="Notifications">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <div class="user-menu">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=6366f1&color=fff" alt="Admin">
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="header-title">
+                    <h1>College Management</h1>
+                    <p>Manage registered colleges and universities on the platform</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-secondary" onclick="openFilterModal()">
+                        <i class="fas fa-filter"></i>
+                        <span>Filter</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="openAddCollegeModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>Add College</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="colleges-overview">
+                <div class="overview-card featured">
+                    <div class="overview-icon teal">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="overview-info">
+                        <h3>48</h3>
+                        <p>Total Colleges</p>
+                        <div class="trend up">
+                            <i class="fas fa-arrow-up"></i> +5 this month
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="overview-icon blue">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="overview-info">
+                        <h3>12</h3>
+                        <p>IITs</p>
+                        <span class="trend">Premier institutes</span>
+                    </div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="overview-icon purple">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div class="overview-info">
+                        <h3>8</h3>
+                        <p>BITS Campuses</p>
+                        <span class="trend">Private deemed</span>
+                    </div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="overview-icon orange">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="overview-info">
+                        <h3>18</h3>
+                        <p>NITs</p>
+                        <span class="trend">National institutes</span>
+                    </div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="overview-icon green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="overview-info">
+                        <h3>42</h3>
+                        <p>Verified</p>
+                        <span class="trend up">87.5% verified</span>
+                    </div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="overview-icon pink">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="overview-info">
+                        <h3>15.2K</h3>
+                        <p>Total Students</p>
+                        <span class="trend up">+12% growth</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Filters -->
+            <div class="quick-filters">
+                <button class="filter-chip active" onclick="filterByType('all')">
+                    <i class="fas fa-th-large"></i> All Colleges
+                </button>
+                <button class="filter-chip" onclick="filterByType('iit')">
+                    <i class="fas fa-star"></i> IITs
+                </button>
+                <button class="filter-chip" onclick="filterByType('nit')">
+                    <i class="fas fa-atom"></i> NITs
+                </button>
+                <button class="filter-chip" onclick="filterByType('bits')">
+                    <i class="fas fa-graduation-cap"></i> BITS
+                </button>
+                <button class="filter-chip" onclick="filterByType('iiit')">
+                    <i class="fas fa-laptop-code"></i> IIITs
+                </button>
+                <button class="filter-chip" onclick="filterByType('state')">
+                    <i class="fas fa-building"></i> State Univ
+                </button>
+                <button class="filter-chip" onclick="filterByType('private')">
+                    <i class="fas fa-university"></i> Private
+                </button>
+            </div>
+
+            <!-- Main Toolbar -->
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <div class="view-options">
+                        <button class="view-btn active" onclick="setView('grid')" title="Grid View">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="view-btn" onclick="setView('list')" title="List View">
+                            <i class="fas fa-list"></i>
+                        </button>
+                        <button class="view-btn" onclick="setView('map')" title="Map View">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </button>
+                    </div>
+                    <div class="sort-dropdown">
+                        <select id="sortColleges" onchange="sortColleges()">
+                            <option value="ranking">NIRF Ranking</option>
+                            <option value="name">Name (A-Z)</option>
+                            <option value="students">Most Students</option>
+                            <option value="fests">Most Fests</option>
+                            <option value="recent">Recently Added</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="toolbar-right">
+                    <div class="selected-info" id="selectedInfo" style="display: none;">
+                        <span><strong id="selectedCount">0</strong> selected</span>
+                        <button class="btn btn-sm btn-danger" onclick="bulkDelete()">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                        <button class="btn btn-sm btn-ghost" onclick="clearSelection()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colleges Grid View -->
+            <div class="colleges-grid" id="collegesGrid">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Colleges List View -->
+            <div class="colleges-list" id="collegesList" style="display: none;">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Colleges Map View -->
+            <div class="colleges-map" id="collegesMap" style="display: none;">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Map View</h3>
+                    <p>Interactive map showing all college locations</p>
+                    <button class="btn btn-primary" onclick="showToast('Map integration coming soon!', 'info')">
+                        Load Map
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-wrap">
+                <div class="showing-text">
+                    Showing <span id="showStart">1</span>-<span id="showEnd">12</span> of <span id="showTotal">48</span> colleges
+                </div>
+                <div class="pagination" id="pagination">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit College Modal -->
+    <div class="modal" id="collegeModal">
+        <div class="modal-overlay" onclick="closeCollegeModal()"></div>
+        <div class="modal-content college-modal">
+            <div class="modal-header">
+                <h2 id="modalTitle"><i class="fas fa-university"></i> Add New College</h2>
+                <button class="modal-close" onclick="closeCollegeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="collegeForm" onsubmit="saveCollege(event)">
+                    <input type="hidden" id="collegeId">
+                    
+                    <div class="form-section">
+                        <h4>Basic Information</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>College Name <span class="required">*</span></label>
+                                <input type="text" id="collegeName" required placeholder="e.g., Indian Institute of Technology Delhi">
+                            </div>
+                            <div class="form-group">
+                                <label>Short Name <span class="required">*</span></label>
+                                <input type="text" id="collegeShortName" required placeholder="e.g., IIT Delhi">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>College Code <span class="required">*</span></label>
+                                <input type="text" id="collegeCode" required placeholder="e.g., IITD">
+                                <span class="input-hint">Unique identifier for the college</span>
+                            </div>
+                            <div class="form-group">
+                                <label>College Type <span class="required">*</span></label>
+                                <select id="collegeType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="iit">IIT - Indian Institute of Technology</option>
+                                    <option value="nit">NIT - National Institute of Technology</option>
+                                    <option value="bits">BITS - Birla Institute</option>
+                                    <option value="iiit">IIIT - Indian Institute of Information Technology</option>
+                                    <option value="state">State University</option>
+                                    <option value="private">Private University</option>
+                                    <option value="deemed">Deemed University</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>Location Details</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>City <span class="required">*</span></label>
+                                <input type="text" id="collegeCity" required placeholder="e.g., New Delhi">
+                            </div>
+                            <div class="form-group">
+                                <label>State <span class="required">*</span></label>
+                                <select id="collegeState" required>
+                                    <option value="">Select State</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea id="collegeAddress" rows="2" placeholder="Full postal address"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>Contact Information</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Official Email</label>
+                                <input type="email" id="collegeEmail" placeholder="e.g., info@iitd.ac.in">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" id="collegePhone" placeholder="e.g., +91 11 2659 1717">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Website</label>
+                            <input type="url" id="collegeWebsite" placeholder="e.g., https://www.iitd.ac.in">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>Additional Details</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>NIRF Ranking</label>
+                                <input type="number" id="collegeRanking" min="1" placeholder="e.g., 1">
+                            </div>
+                            <div class="form-group">
+                                <label>Established Year</label>
+                                <input type="number" id="collegeEstablished" min="1800" max="2024" placeholder="e.g., 1961">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Total Students (approx)</label>
+                                <input type="number" id="collegeStudents" min="0" placeholder="e.g., 8000">
+                            </div>
+                            <div class="form-group">
+                                <label>Campus Area (acres)</label>
+                                <input type="number" id="collegeArea" min="0" step="0.1" placeholder="e.g., 325">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>College Logo</h4>
+                        <div class="logo-upload-area">
+                            <div class="logo-preview" id="logoPreview">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div class="logo-upload-actions">
+                                <button type="button" class="btn btn-secondary" onclick="uploadLogo()">
+                                    <i class="fas fa-upload"></i> Upload Logo
+                                </button>
+                                <button type="button" class="btn btn-ghost" onclick="removeLogo()">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>Status</h4>
+                        <div class="status-toggle">
+                            <label class="switch-label">
+                                <span>Active on Platform</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="collegeActive" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
+                            <label class="switch-label">
+                                <span>Verified Institution</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="collegeVerified">
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-ghost" onclick="closeCollegeModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save College
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- College Detail Modal -->
+    <div class="modal" id="detailModal">
+        <div class="modal-overlay" onclick="closeDetailModal()"></div>
+        <div class="modal-content detail-modal">
+            <button class="modal-close" onclick="closeDetailModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body" id="detailBody">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div class="modal" id="importModal">
+        <div class="modal-overlay" onclick="closeImportModal()"></div>
+        <div class="modal-content import-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-import"></i> Import Colleges</h2>
+                <button class="modal-close" onclick="closeImportModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="import-options">
+                    <div class="import-option" onclick="importFromCSV()">
+                        <i class="fas fa-file-csv"></i>
+                        <h4>Upload CSV</h4>
+                        <p>Import from a CSV file</p>
+                    </div>
+                    <div class="import-option" onclick="importFromExcel()">
+                        <i class="fas fa-file-excel"></i>
+                        <h4>Upload Excel</h4>
+                        <p>Import from Excel file</p>
+                    </div>
+                    <div class="import-option" onclick="importFromAPI()">
+                        <i class="fas fa-cloud-download-alt"></i>
+                        <h4>Fetch from API</h4>
+                        <p>Import from government database</p>
+                    </div>
+                </div>
+                <div class="import-template">
+                    <p>Download template: <a href="#" onclick="downloadTemplate()">CSV Template</a> | <a href="#" onclick="downloadTemplate()">Excel Template</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Modal -->
+    <div class="modal" id="filterModal">
+        <div class="modal-overlay" onclick="closeFilterModal()"></div>
+        <div class="modal-content filter-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-filter"></i> Filter Colleges</h2>
+                <button class="modal-close" onclick="closeFilterModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="filter-section">
+                    <h4>College Type</h4>
+                    <div class="filter-checkboxes">
+                        <label><input type="checkbox" checked> IIT</label>
+                        <label><input type="checkbox" checked> NIT</label>
+                        <label><input type="checkbox" checked> BITS</label>
+                        <label><input type="checkbox" checked> IIIT</label>
+                        <label><input type="checkbox" checked> State</label>
+                        <label><input type="checkbox" checked> Private</label>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <h4>State</h4>
+                    <select id="filterState">
+                        <option value="">All States</option>
+                        <option>Delhi</option>
+                        <option>Maharashtra</option>
+                        <option>Karnataka</option>
+                        <option>Tamil Nadu</option>
+                    </select>
+                </div>
+                <div class="filter-section">
+                    <h4>NIRF Ranking</h4>
+                    <div class="range-inputs">
+                        <input type="number" placeholder="Min" min="1">
+                        <span>to</span>
+                        <input type="number" placeholder="Max" min="1">
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <h4>Status</h4>
+                    <div class="filter-checkboxes">
+                        <label><input type="checkbox" checked> Active</label>
+                        <label><input type="checkbox" checked> Inactive</label>
+                        <label><input type="checkbox"> Pending Verification</label>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-ghost" onclick="resetFilters()">Reset</button>
+                    <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-overlay" onclick="closeDeleteModal()"></div>
+        <div class="modal-content delete-modal">
+            <div class="delete-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Delete College?</h3>
+            <p>Are you sure you want to delete <strong id="deleteCollegeName">this college</strong>? This action cannot be undone.</p>
+            <div class="delete-actions">
+                <button class="btn btn-ghost" onclick="closeDeleteModal()">Cancel</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/colleges.js"></script>
+</body>
+</html>
