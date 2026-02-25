@@ -26,7 +26,7 @@ class AarambhAI {
 
             // Determine API URL based on environment
             const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-            const apiUrl = isLocalhost ? 'http://localhost:3000/api/projects' : 'https://your-backend-url.onrender.com/api/projects'; // REPLACE THIS WITH YOUR HOSTED BACKEND URL
+            const apiUrl = isLocalhost ? 'http://localhost:3000/api/projects' : 'https://are-backend-xyez.onrender.com/api/projects'; // REPLACE THIS WITH YOUR HOSTED BACKEND URL
 
             const response = await fetch(apiUrl);
             if (!response.ok) throw new Error('API Error');
