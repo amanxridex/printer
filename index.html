@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarambh AI - Real Estate Intelligence</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- AI Chat Assistant -->
+    <div class="ai-assistant" id="aiAssistant">
+        <div class="ai-avatar">
+            <div class="ai-pulse"></div>
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-header">
+                <div class="ai-title">
+                    <i class="fas fa-brain"></i>
+                    <span>Aarambh AI</span>
+                </div>
+                <button class="ai-close" onclick="toggleAI()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="ai-messages" id="aiMessages">
+                <div class="ai-message ai">
+                    <div class="ai-bubble">
+                        Namaste! Main Aarambh AI hoon. Aaj Vrindavan mein 3 naye projects launch hue hain. Kya dekhna
+                        chahoge? 🏠
+                    </div>
+                    <span class="ai-time">Just now</span>
+                </div>
+            </div>
+            <div class="ai-input">
+                <input type="text" placeholder="Pucho kuch bhi..." id="aiInput" onkeypress="handleAIInput(event)">
+                <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Matrix Rain Background -->
+    <canvas id="matrixCanvas" class="matrix-bg"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-glow"></div>
+                <div class="logo-icon">
+                    <svg viewBox="0 0 100 100" class="logo-svg">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2" />
+                        <path d="M50 20 L50 80 M20 50 L80 50" stroke="currentColor" stroke-width="2" />
+                        <circle cx="50" cy="50" r="10" fill="currentColor" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-main">AARAMBH</span>
+                    <span class="logo-sub">REAL ESTATE INTELLIGENCE</span>
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a href="#" class="active">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                    <div class="nav-glow"></div>
+                </a>
+                <a href="#">
+                    <i class="fas fa-building"></i>
+                    <span>Projects</span>
+                </a>
+                <a href="mapview.html">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Map View</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-robot"></i>
+                    <span>AI Insights</span>
+                    <span class="nav-badge">NEW</span>
+                </a>
+            </div>
+
+            <div class="nav-actions">
+                <div class="live-indicator">
+                    <div class="live-pulse"></div>
+                    <span>SYSTEM ONLINE</span>
+                </div>
+                <button class="btn-cyber" onclick="openModal()">
+                    <span class="btn-text">ADD PROJECT</span>
+                    <span class="btn-glitch"></span>
+                </button>
+                <div class="user-avatar">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"
+                        alt="User">
+                    <div class="avatar-status"></div>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-particles" id="particles"></div>
+
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="badge-cyber">
+                        <i class="fas fa-microchip"></i>
+                        <span>AI-POWERED MARKET INTELLIGENCE</span>
+                    </div>
+
+                    <h1 class="hero-title">
+                        <span class="title-line">Track. Analyze.</span>
+                        <span class="title-line gradient-text">Dominate.</span>
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        Next-generation real estate tracking for Vrindavan & Braj region.
+                        AI-driven insights, live market data, predictive analytics.
+                    </p>
+
+                    <div class="hero-cta">
+                        <button class="btn-primary-glow">
+                            <i class="fas fa-rocket"></i>
+                            Explore Markets
+                        </button>
+                        <button class="btn-secondary">
+                            <i class="fas fa-play"></i>
+                            Watch Demo
+                        </button>
+                    </div>
+
+                    <div class="tech-stack">
+                        <span>Powered by:</span>
+                        <div class="tech-icons">
+                            <i class="fas fa-brain" title="AI Engine"></i>
+                            <i class="fas fa-satellite" title="Live Data"></i>
+                            <i class="fas fa-shield-alt" title="Secure"></i>
+                            <i class="fas fa-bolt" title="Real-time"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hologram-card">
+                        <div class="holo-header">
+                            <span class="holo-dot"></span>
+                            <span class="holo-title">MARKET PULSE</span>
+                            <span class="holo-live">LIVE</span>
+                        </div>
+                        <div class="holo-content">
+                            <div class="holo-stat">
+                                <span class="holo-label">Active Projects</span>
+                                <span class="holo-value" id="holoProjects">47</span>
+                                <span class="holo-trend up">+12%</span>
+                            </div>
+                            <div class="holo-chart">
+                                <svg viewBox="0 0 200 60" class="chart-svg">
+                                    <defs>
+                                        <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.8" />
+                                            <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M0,50 Q20,45 40,40 T80,35 T120,25 T160,30 T200,15" fill="none"
+                                        stroke="#6366f1" stroke-width="2" />
+                                    <path d="M0,50 Q20,45 40,40 T80,35 T120,25 T160,30 T200,15 V60 H0 Z"
+                                        fill="url(#chartGradient)" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="holo-scan"></div>
+                    </div>
+
+                    <div class="floating-badges">
+                        <div class="float-badge" style="--delay:0s">
+                            <i class="fas fa-check-circle"></i>
+                            <span>RERA Verified</span>
+                        </div>
+                        <div class="float-badge" style="--delay:0.5s">
+                            <i class="fas fa-robot"></i>
+                            <span>AI Monitored</span>
+                        </div>
+                        <div class="float-badge" style="--delay:1s">
+                            <i class="fas fa-clock"></i>
+                            <span>Real-time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrolling Ticker -->
+        <div class="cyber-ticker">
+            <div class="ticker-track">
+                <div class="ticker-item">
+                    <span class="ticker-time">02:34 PM</span>
+                    <span class="ticker-tag alert">ALERT</span>
+                    <span class="ticker-text">Godrej Properties launches 200-acre township in Chhatikara</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-time">02:15 PM</span>
+                    <span class="ticker-tag update">UPDATE</span>
+                    <span class="ticker-text">NH-19 expansion: Travel time to Delhi reduced by 15 mins</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-time">01:58 PM</span>
+                    <span class="ticker-tag prediction">AI PREDICTION</span>
+                    <span class="ticker-text">Sector 5 prices expected to rise 18% in next 6 months</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-time">01:42 PM</span>
+                    <span class="ticker-tag alert">RERA</span>
+                    <span class="ticker-text">3 builders fined for project delays in Mathura region</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard">
+        <div class="container">
+
+            <!-- Stats Row -->
+            <div class="stats-cyber-row">
+                <div class="cyber-stat">
+                    <div class="stat-icon-wrap blue">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" data-target="47">0</span>
+                        <span class="stat-label">Active Projects</span>
+                    </div>
+                    <div class="stat-chart mini">
+                        <div class="bar" style="height:60%"></div>
+                        <div class="bar" style="height:80%"></div>
+                        <div class="bar" style="height:45%"></div>
+                        <div class="bar" style="height:90%"></div>
+                        <div class="bar" style="height:70%"></div>
+                    </div>
+                </div>
+
+                <div class="cyber-stat">
+                    <div class="stat-icon-wrap green">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" data-target="12">0</span>
+                        <span class="stat-label">New Launches</span>
+                    </div>
+                    <div class="stat-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+23%</span>
+                    </div>
+                </div>
+
+                <div class="cyber-stat">
+                    <div class="stat-icon-wrap orange">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" data-target="8.5" data-decimal="1">0</span>
+                        <span class="stat-label">Price Growth %</span>
+                    </div>
+                    <div class="stat-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+2.1%</span>
+                    </div>
+                </div>
+
+                <div class="cyber-stat">
+                    <div class="stat-icon-wrap purple">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" data-target="15642">0</span>
+                        <span class="stat-label">AI Data Points</span>
+                    </div>
+                    <div class="stat-live">
+                        <span class="live-dot"></span>
+                        Live
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Insights Panel -->
+            <div class="ai-insights-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-brain"></i>
+                        <span>AI MARKET INSIGHTS</span>
+                    </div>
+                    <div class="panel-actions">
+                        <button class="btn-icon"><i class="fas fa-sync-alt"></i></button>
+                        <button class="btn-icon"><i class="fas fa-expand"></i></button>
+                    </div>
+                </div>
+                <div class="insights-grid">
+                    <div class="insight-card hot">
+                        <div class="insight-glow"></div>
+                        <div class="insight-icon"><i class="fas fa-fire"></i></div>
+                        <h4>Hot Opportunity</h4>
+                        <p>3 projects in Chhatikara showing construction delays. Negotiate 8-12% discount possible.</p>
+                        <div class="insight-meta">
+                            <span class="confidence">AI Confidence: 94%</span>
+                            <button class="btn-sm">View Details</button>
+                        </div>
+                    </div>
+                    <div class="insight-card trend">
+                        <div class="insight-glow"></div>
+                        <div class="insight-icon"><i class="fas fa-arrow-trend-up"></i></div>
+                        <h4>NRI Surge Detected</h4>
+                        <p>40% increase in NRI inquiries this quarter. Premium segment demand rising.</p>
+                        <div class="insight-meta">
+                            <span class="confidence">AI Confidence: 89%</span>
+                            <button class="btn-sm">View Details</button>
+                        </div>
+                    </div>
+                    <div class="insight-card prediction">
+                        <div class="insight-glow"></div>
+                        <div class="insight-icon"><i class="fas fa-crystal-ball"></i></div>
+                        <h4>6-Month Forecast</h4>
+                        <p>ISKCON Road area predicted to see 15-18% appreciation post metro announcement.</p>
+                        <div class="insight-meta">
+                            <span class="confidence">AI Confidence: 87%</span>
+                            <button class="btn-sm">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters & Search -->
+            <div class="control-panel">
+                <div class="search-cyber">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search projects, builders, locations..." id="searchInput">
+                    <div class="search-ai-hint">
+                        <i class="fas fa-magic"></i>
+                        Try: "Under 50 lakhs near ISKCON"
+                    </div>
+                </div>
+
+                <div class="filter-chips">
+                    <button class="chip active" onclick="filterProjects('all')">All Projects</button>
+                    <button class="chip" onclick="filterProjects('launch')">New Launches</button>
+                    <button class="chip" onclick="filterProjects('residential')">Residential</button>
+                    <button class="chip" onclick="filterProjects('commercial')">Commercial</button>
+                    <button class="chip" onclick="filterProjects('plots')">Plots</button>
+                    <button class="chip" onclick="filterProjects('villa')">Villas</button>
+                </div>
+
+                <div class="advanced-filters">
+                    <select class="cyber-select">
+                        <option>All Locations</option>
+                        <option>Vrindavan</option>
+                        <option>Mathura</option>
+                        <option>Chhatikara</option>
+                        <option>Govardhan</option>
+                    </select>
+                    <select class="cyber-select">
+                        <option>Price Range</option>
+                        <option>Under 30L</option>
+                        <option>30L - 60L</option>
+                        <option>60L - 1Cr</option>
+                        <option>Above 1Cr</option>
+                    </select>
+                    <select class="cyber-select">
+                        <option>Status</option>
+                        <option>Pre-launch</option>
+                        <option>Under Construction</option>
+                        <option>Ready to Move</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="projects-section">
+                <div class="section-header-cyber">
+                    <h2><i class="fas fa-layer-group"></i> LIVE PROJECTS</h2>
+                    <div class="view-controls">
+                        <button class="view-btn active" onclick="setView('grid')">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="view-btn" onclick="setView('list')">
+                            <i class="fas fa-list"></i>
+                        </button>
+                        <button class="view-btn" onclick="setView('map')">
+                            <i class="fas fa-map"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="projects-cyber-grid" id="projectsContainer">
+                    <!-- Projects injected by JS -->
+                </div>
+
+                <button class="load-more-cyber" onclick="loadMore()">
+                    <span class="btn-text">LOAD MORE PROJECTS</span>
+                    <span class="btn-loader"></span>
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Add Project Modal -->
+    <div class="modal-cyber" id="addModal">
+        <div class="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal-content-cyber">
+            <div class="modal-header-cyber">
+                <div class="header-icon">
+                    <i class="fas fa-plus-hexagon"></i>
+                </div>
+                <div>
+                    <h3>ADD NEW PROJECT</h3>
+                    <span>Enter project details for AI analysis</span>
+                </div>
+                <button class="close-cyber" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form class="cyber-form" onsubmit="submitProject(event)">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>PROJECT NAME</label>
+                        <input type="text" placeholder="e.g., Radhe Krishna Residency" required>
+                    </div>
+                    <div class="input-group">
+                        <label>BUILDER / DEVELOPER</label>
+                        <input type="text" placeholder="Builder name" required>
+                    </div>
+                </div>
+
+                <div class="form-grid three">
+                    <div class="input-group">
+                        <label>LOCATION</label>
+                        <select required>
+                            <option value="">Select</option>
+                            <option>Vrindavan</option>
+                            <option>Mathura</option>
+                            <option>Chhatikara</option>
+                            <option>Govardhan</option>
+                            <option>Kosi</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>PROJECT TYPE</label>
+                        <select required>
+                            <option value="">Select</option>
+                            <option>Apartment</option>
+                            <option>Villa</option>
+                            <option>Plot</option>
+                            <option>Commercial</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>PRICE RANGE</label>
+                        <input type="text" placeholder="₹ 45L - ₹ 65L">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>PROJECT STATUS</label>
+                    <div class="status-segment">
+                        <label class="segment-btn">
+                            <input type="radio" name="status" value="prelaunch">
+                            <span>Pre-launch</span>
+                        </label>
+                        <label class="segment-btn">
+                            <input type="radio" name="status" value="active" checked>
+                            <span>Active</span>
+                        </label>
+                        <label class="segment-btn">
+                            <input type="radio" name="status" value="completed">
+                            <span>Completed</span>
+                        </label>
+                        <label class="segment-btn">
+                            <input type="radio" name="status" value="delayed">
+                            <span>Delayed</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="upload-zone">
+                    <input type="file" id="projectImages" multiple hidden>
+                    <div class="upload-area" onclick="document.getElementById('projectImages').click()">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <div class="upload-pulse"></div>
+                        </div>
+                        <h4>Drop project images here</h4>
+                        <p>or click to browse</p>
+                        <span class="upload-hint">AI will auto-analyze construction progress</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-cyber-submit">
+                        <i class="fas fa-rocket"></i>
+                        LAUNCH PROJECT
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast-cyber" id="toast">
+        <div class="toast-icon"><i class="fas fa-check"></i></div>
+        <div class="toast-content">
+            <h4>Success</h4>
+            <p id="toastMsg">Project added successfully</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
