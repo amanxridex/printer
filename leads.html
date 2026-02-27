@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarambh AI - Leads Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Matrix Rain Background -->
+    <canvas id="matrixCanvas" class="matrix-bg"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-glow"></div>
+                <div class="logo-icon">
+                    <svg viewBox="0 0 100 100" class="logo-svg">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2" />
+                        <path d="M50 20 L50 80 M20 50 L80 50" stroke="currentColor" stroke-width="2" />
+                        <circle cx="50" cy="50" r="10" fill="currentColor" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-main">AARAMBH</span>
+                    <span class="logo-sub">REAL ESTATE INTELLIGENCE</span>
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="leads.html" class="active">
+                    <i class="fas fa-users"></i>
+                    <span>Leads</span>
+                    <div class="nav-glow"></div>
+                </a>
+                <a href="mapview.html">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Map View</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-robot"></i>
+                    <span>AI Insights</span>
+                    <span class="nav-badge">NEW</span>
+                </a>
+            </div>
+
+            <div class="nav-actions">
+                <div class="live-indicator">
+                    <div class="live-pulse"></div>
+                    <span>SYSTEM ONLINE</span>
+                </div>
+                <div class="user-avatar">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"
+                        alt="User">
+                    <div class="avatar-status"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="dashboard">
+        <div class="dashboard-header">
+            <div>
+                <h1 class="page-title">Lead Management</h1>
+                <p class="subtitle">AI-Sorted Active Prospects & Interactions</p>
+            </div>
+
+            <div class="filters-bar" style="display: flex; gap: 1rem; align-items: center;">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search leads by name or requirement..."
+                        style="background: var(--dark-lighter); border: 1px solid rgba(255,255,255,0.1); padding: 0.5rem 1rem 0.5rem 2.5rem; border-radius: 8px; color: white; width: 300px;">
+                </div>
+                <button class="btn-cyber" style="padding: 0.5rem 1.5rem;">
+                    <span class="btn-text" style="font-size: 0.9rem;">Export CSV</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="leads-container" style="
+            background: var(--dark-light); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-radius: 12px; 
+            padding: 1.5rem; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr
+                        style="border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gray); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">
+                        <th style="padding: 1rem 0.5rem;">Lead Name</th>
+                        <th style="padding: 1rem 0.5rem;">Contact</th>
+                        <th style="padding: 1rem 0.5rem;">Looking For</th>
+                        <th style="padding: 1rem 0.5rem;">Budget</th>
+                        <th style="padding: 1rem 0.5rem;">AI Score</th>
+                        <th style="padding: 1rem 0.5rem;">Status</th>
+                        <th style="padding: 1rem 0.5rem; text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="leadsTableBody">
+                    <!-- Populated by leadsScript.js -->
+                </tbody>
+            </table>
+
+            <!-- Pagination Mockup -->
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; color: var(--gray); font-size: 0.9rem;">
+                <span>Showing 1-10 of 42 leads</span>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button
+                        style="background: var(--dark-lighter); border: none; color: white; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Prev</button>
+                    <button
+                        style="background: var(--primary); border: none; color: white; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">1</button>
+                    <button
+                        style="background: var(--dark-lighter); border: none; color: white; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">2</button>
+                    <button
+                        style="background: var(--dark-lighter); border: none; color: white; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Next</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="leadsScript.js"></script>
+</body>
+
+</html>
