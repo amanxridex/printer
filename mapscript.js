@@ -192,18 +192,7 @@ class VrindavanMapController {
         const countEl = document.getElementById('projectCount');
 
         container.innerHTML = '';
-
-
-        if (this.isLoading) {
-            container.innerHTML = `
-                <div style="padding: 2rem; text-align: center; color: var(--gray);">
-                    <i class="fas fa-spinner fa-spin fa-2x"></i>
-                    <p style="margin-top: 1rem;">Finding live projects...</p>
-                </div>
-            `;
-            return;
-        }
-
+        container.classList.remove('detail-mode-active');
 
         if (this.isLoading) {
             container.innerHTML = `
@@ -215,15 +204,43 @@ class VrindavanMapController {
             return;
         }
 
-        const filtered = this.currentFilter === 'all'
-            ? this.projects
-            : this.projects.filter(p => p.type === this.currentFilter);
+        // Add filter chips for recommendation
+        const filterHtml = `
+            <div class="ai-filter-chips">
+                <button class="ai-chip ${this.currentRecFilter === 'all' || !this.currentRecFilter ? 'active' : ''}" data-rec="all" onclick="mapController.filterByRec('all')">All Ratings</button>
+                <button class="ai-chip buy ${this.currentRecFilter === 'buy' ? 'active' : ''}" data-rec="buy" onclick="mapController.filterByRec('buy')"><i class="fas fa-star"></i> Buy / Strong Buy</button>
+                <button class="ai-chip hold ${this.currentRecFilter === 'hold' ? 'active' : ''}" data-rec="hold" onclick="mapController.filterByRec('hold')"><i class="fas fa-hand-paper"></i> Hold</button>
+                <button class="ai-chip avoid ${this.currentRecFilter === 'avoid' ? 'active' : ''}" data-rec="avoid" onclick="mapController.filterByRec('avoid')"><i class="fas fa-ban"></i> Avoid</button>
+            </div>
+            <div id="projectsCardsList"></div>
+        `;
+        container.innerHTML = filterHtml;
+        const cardsList = document.getElementById('projectsCardsList');
+
+        let filtered = this.projects;
+        if (this.currentFilter !== 'all') {
+            filtered = filtered.filter(p => p.type === this.currentFilter);
+        }
+
+        if (this.currentRecFilter && this.currentRecFilter !== 'all') {
+            filtered = filtered.filter(p => {
+                const finalScore = this.calculateCachedScore(p);
+                let rec = "hold";
+                if (finalScore >= 75) rec = "buy";
+                else if (finalScore < 60) rec = "avoid";
+
+                return rec === this.currentRecFilter;
+            });
+        }
 
         countEl.textContent = `${filtered.length} Projects`;
 
         filtered.forEach(project => {
+            const finalScore = project.aiScore || this.calculateCachedScore(project);
+            let recClass = finalScore >= 75 ? 'rec-buy' : finalScore >= 60 ? 'rec-hold' : 'rec-avoid';
+
             const card = document.createElement('div');
-            card.className = 'project-card-map';
+            card.className = `project-card-map ${this.selectedProject?.id === project.id ? 'active' : ''}`;
             card.innerHTML = `
                 <div class="project-header">
                     <div>
@@ -239,21 +256,35 @@ class VrindavanMapController {
                 <div class="meta">
                     <span><i class="fas fa-bed"></i> ${project.beds || 'N/A'} BHK</span>
                     <span><i class="fas fa-ruler-combined"></i> ${project.area}</span>
-                    <span style="color: var(--primary); font-weight: 600;">
-                        <i class="fas fa-robot"></i> ${project.aiScore}%
+                    <span class="ai-card-score ${recClass}">
+                        <i class="fas fa-robot"></i> ${finalScore}%
                     </span>
                 </div>
             `;
 
             card.addEventListener('click', () => {
                 this.selectProject(project);
-                // Highlight active card
-                document.querySelectorAll('.project-card-map').forEach(c => c.classList.remove('active'));
-                card.classList.add('active');
             });
 
-            container.appendChild(card);
+            cardsList.appendChild(card);
         });
+    }
+
+    filterProjects(type) {
+        this.currentFilter = type;
+
+        // Update chips
+        document.querySelectorAll('.filter-chips-map .chip-map').forEach(chip => {
+            chip.classList.toggle('active', chip.dataset.filter === type);
+        });
+
+        this.addMarkers();
+        this.renderSidebar();
+    }
+
+    filterByRec(recType) {
+        this.currentRecFilter = recType;
+        this.renderSidebar();
     }
 
     selectProject(project) {
@@ -274,20 +305,22 @@ class VrindavanMapController {
             marker.openPopup();
         }
 
-        // Show detail panel on desktop
-        if (window.innerWidth > 1024) {
-            this.showProjectDetail(project.id);
-        }
+        // Show detail panel in sidebar
+        this.showProjectDetail(project.id);
     }
 
     showProjectDetail(projectId) {
         const project = this.projects.find(p => p.id === projectId);
         if (!project) return;
 
-        const panel = document.getElementById('detailPanel');
-        const content = document.getElementById('detailContent');
+        const content = document.getElementById('projectsListMap');
+        content.classList.add('detail-mode-active');
 
         content.innerHTML = `
+            <div class="sidebar-back-btn" onclick="mapController.closeDetailPanel()">
+                <i class="fas fa-arrow-left"></i> Back to Projects List
+            </div>
+
             <div class="detail-carousel" id="detailCarousel">
                 ${project.images.map((img, index) => `
                     <div class="carousel-slide ${index === 0 ? 'active' : ''}">
@@ -325,24 +358,12 @@ class VrindavanMapController {
             <div class="detail-section">
                 <h4>Amenities</h4>
                 <div class="amenities-grid">
-                    ${project.amenities.map(a => `
+                    ${project.amenities?.map(a => `
                         <div class="amenity">
                             <i class="fas fa-check-circle"></i>
                             <span>${a}</span>
                         </div>
-                    `).join('')}
-                </div>
-            </div>
-            
-            <div class="detail-section">
-                <h4>Nearby Places</h4>
-                <div class="nearby-list">
-                    ${project.nearby.map(n => `
-                        <div class="nearby-item">
-                            <span><i class="fas ${n.icon}"></i> ${n.name}</span>
-                            <span class="distance">${n.distance}</span>
-                        </div>
-                    `).join('')}
+                    `).join('') || ''}
                 </div>
             </div>
             
@@ -354,22 +375,25 @@ class VrindavanMapController {
                     <i class="fas fa-street-view"></i> Street View
                 </button>
                 <button class="btn-share" onclick="mapController.shareProject(${project.id})">
-                    <i class="fas fa-share-alt"></i>
+                    <i class="fas fa-share-alt"></i> Share
                 </button>
             </div>
         `;
-
-        panel.classList.add('active');
 
         // Start auto-scroll if there are multiple images
         if (project.images && project.images.length > 1) {
             this.startCarousel();
         }
+
+        // Ensure sidebar is open on mobile
+        document.getElementById('projectsSidebar').classList.add('open');
     }
 
     closeDetailPanel() {
         this.stopCarousel();
-        document.getElementById('detailPanel').classList.remove('active');
+        this.selectedProject = null;
+        this.renderSidebar(); // Reload the list
+        if (this.map) this.map.closePopup();
     }
 
     calculateCachedScore(project) {
