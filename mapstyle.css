@@ -216,7 +216,7 @@ body {
 
 /* Sidebar */
 .projects-sidebar {
-    width: 350px;
+    width: 450px;
     background: var(--dark-light);
     border-right: 1px solid rgba(99, 102, 241, 0.2);
     display: flex;
@@ -259,6 +259,35 @@ body {
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
+    /* Avoid chip scrollbar breaking layout */
+}
+
+/* Sidebar Back Button */
+.sidebar-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    color: var(--gray);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: all 0.3s;
+}
+
+.sidebar-back-btn:hover {
+    background: rgba(99, 102, 241, 0.15);
+    color: white;
+}
+
+/* Detail Mode Specific Overrides */
+.projects-list-map.detail-mode-active {
+    padding-bottom: 80px;
+    /* space for toast later */
 }
 
 /* Sidebar AI Filter Chips */
@@ -711,52 +740,15 @@ input:checked+.slider::before {
     transform: translateX(20px);
 }
 
-/* Project Detail Panel */
+/* OLD Right Side Panel - Hidden as it's merged into sidebar */
 .project-detail-panel {
-    position: absolute;
-    right: 1.5rem;
-    top: 1.5rem;
-    bottom: 4rem;
-    /* Stop above bottom controls */
-    width: 420px;
-    background: var(--dark-light);
-    border-radius: 20px;
-    padding: 1.5rem;
-    z-index: 2500;
-    /* above map overlays */
-    transform: translateX(450px);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow-y: auto;
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.project-detail-panel.active {
-    transform: translateX(0);
-}
-
-.close-detail {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 36px;
-    height: 36px;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    border-radius: 50%;
-    color: var(--gray);
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.close-detail:hover {
-    background: var(--danger);
-    color: white;
+    display: none !important;
 }
 
 .detail-carousel {
     position: relative;
-    height: 200px;
+    height: 250px;
+    /* Taller since it's in the wide sidebar */
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 1.5rem;
@@ -969,10 +961,7 @@ input:checked+.slider::before {
     color: var(--primary);
 }
 
-/* Specific Detail Overrides */
-.project-detail-panel {
-    width: 420px;
-}
+/* Removed Detail Overrides Area */
 
 /* Real AI Analysis Component */
 .real-ai-analysis {
