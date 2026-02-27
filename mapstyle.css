@@ -1192,3 +1192,125 @@ form {
         font-size: 0.8rem;
     }
 }
+
+/* Top India Ads */
+.top-india-ads {
+    position: absolute;
+    bottom: 60px;
+    /* Above the stats bar */
+    right: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    z-index: 1000;
+    justify-content: flex-end;
+}
+
+.ad-card {
+    background: rgba(19, 19, 31, 0.95);
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    border-radius: 8px;
+    padding: 6px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s;
+    min-width: 140px;
+    max-width: 180px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.ad-card:hover {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+}
+
+.ad-badge {
+    align-self: flex-start;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.ad-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.ad-title {
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ad-builder {
+    color: var(--gray);
+    font-size: 0.65rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Region Modal Specifics */
+.region-content {
+    max-width: 500px;
+}
+
+.region-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.region-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.region-btn i {
+    font-size: 2rem;
+    color: var(--primary);
+    transition: all 0.3s;
+}
+
+.region-btn:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.region-btn:hover i {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .top-india-ads {
+        right: 10px;
+        bottom: 70px;
+        flex-direction: column;
+    }
+}
