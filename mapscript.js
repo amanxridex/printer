@@ -48,6 +48,7 @@ class VrindavanMapController {
                 // Refresh UI with real data
                 this.addMarkers();
                 this.renderSidebar();
+                this.renderTopAds();
 
                 // Hide toast manually
                 const toast = document.getElementById('toast');
@@ -427,10 +428,54 @@ class VrindavanMapController {
     }
 
     resetMap() {
-        this.map.flyTo([27.5658, 77.6762], 13, {
-            duration: 1.5
-        });
+        // Open region selection modal instead of resetting to Vrindavan
+        document.getElementById('regionModal').classList.add('active');
         this.closeDetailPanel();
+    }
+
+    focusRegion(region) {
+        document.getElementById('regionModal').classList.remove('active');
+        const regions = {
+            'vrindavan': { center: [27.5658, 77.6762], zoom: 13 },
+            'noida': { center: [28.5355, 77.3910], zoom: 11 },
+            'gurugram': { center: [28.4595, 77.0266], zoom: 11 },
+            'mumbai': { center: [19.0760, 72.8777], zoom: 11 }
+        };
+
+        if (regions[region]) {
+            this.map.flyTo(regions[region].center, regions[region].zoom, {
+                duration: 1.5
+            });
+            this.showToast(`Focused on ${region.charAt(0).toUpperCase() + region.slice(1)}`);
+        }
+    }
+
+    renderTopAds() {
+        const topAdsContainer = document.getElementById('topIndiaAds');
+        if (!topAdsContainer || this.projects.length < 3) return;
+
+        // Pick 3 random projects
+        const shuffled = [...this.projects].sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 3);
+
+        const adsHtml = selected.map(project => `
+            <div class="ad-card" onclick="mapController.selectProjectById(${project.id})">
+                <span class="ad-badge">Top in India</span>
+                <div class="ad-info">
+                    <span class="ad-title">${project.title}</span>
+                    <span class="ad-builder">${project.builder}</span>
+                </div>
+            </div>
+        `).join('');
+
+        topAdsContainer.innerHTML = adsHtml;
+    }
+
+    selectProjectById(projectId) {
+        const project = this.projects.find(p => p.id === projectId);
+        if (project) {
+            this.selectProject(project);
+        }
     }
 
     getDirections(lat, lng) {
@@ -654,6 +699,14 @@ function toggleLayer(type) {
 
 function resetMap() {
     mapController.resetMap();
+}
+
+function closeRegionModal() {
+    document.getElementById('regionModal').classList.remove('active');
+}
+
+function focusRegion(region) {
+    mapController.focusRegion(region);
 }
 
 function zoomInMap() {

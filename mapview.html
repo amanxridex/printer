@@ -134,6 +134,11 @@
                 <!-- Detail content injected -->
             </div>
         </div>
+
+        <!-- Top India Ads -->
+        <div class="top-india-ads" id="topIndiaAds">
+            <!-- Ads injected here by JS -->
+        </div>
     </div>
 
     <!-- Quick Stats Bar -->
@@ -212,6 +217,34 @@
                     Confirm Location & Add
                 </button>
             </form>
+        </div>
+    </div>
+
+    <!-- Region Selection Modal -->
+    <div class="modal-map" id="regionModal">
+        <div class="modal-overlay" onclick="closeRegionModal()"></div>
+        <div class="modal-content-map region-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-globe-asia"></i> Choose City to Focus</h3>
+                <button class="close-btn" onclick="closeRegionModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="region-grid">
+                <button class="region-btn" onclick="focusRegion('vrindavan')">
+                    <i class="fas fa-om"></i> Vrindavan
+                </button>
+                <button class="region-btn" onclick="focusRegion('noida')">
+                    <i class="fas fa-city"></i> Noida / Delhi NCR
+                </button>
+                <button class="region-btn" onclick="focusRegion('gurugram')">
+                    <i class="fas fa-building"></i> Gurugram
+                </button>
+                <button class="region-btn" onclick="focusRegion('mumbai')">
+                    <i class="fas fa-water"></i> Mumbai
+                </button>
+            </div>
         </div>
     </div>
 
