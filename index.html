@@ -30,8 +30,8 @@
             <div class="ai-messages" id="aiMessages">
                 <div class="ai-message ai">
                     <div class="ai-bubble">
-                        Namaste! Main Aarambh AI hoon. Aaj Vrindavan mein 3 naye projects launch hue hain. Kya dekhna
-                        chahoge? 🏠
+                        Namaste! Main Aarambh AI hoon. Aaj Vrindavan mein naye real estate properties list hui hain. Kya
+                        dekhna chahoge? 🏠
                     </div>
                     <span class="ai-time">Just now</span>
                 </div>
@@ -202,7 +202,7 @@
 
         <!-- Scrolling Ticker -->
         <div class="cyber-ticker">
-            <div class="ticker-track">
+            <div class="ticker-track" id="newsTickerTrack">
                 <div class="ticker-item">
                     <span class="ticker-time">02:34 PM</span>
                     <span class="ticker-tag alert">ALERT</span>
@@ -238,7 +238,7 @@
                         <i class="fas fa-building"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-number" data-target="47">0</span>
+                        <span class="stat-number" id="statActiveProjects" data-target="47">0</span>
                         <span class="stat-label">Active Projects</span>
                     </div>
                     <div class="stat-chart mini">
@@ -255,7 +255,7 @@
                         <i class="fas fa-rocket"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-number" data-target="12">0</span>
+                        <span class="stat-number" id="statNewLaunches" data-target="12">0</span>
                         <span class="stat-label">New Launches</span>
                     </div>
                     <div class="stat-trend up">
@@ -269,8 +269,8 @@
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-number" data-target="8.5" data-decimal="1">0</span>
-                        <span class="stat-label">Price Growth %</span>
+                        <span class="stat-number" id="statPriceGrowth" data-target="8.5" data-decimal="1">0</span>
+                        <span class="stat-label">Avg AI Score %</span>
                     </div>
                     <div class="stat-trend up">
                         <i class="fas fa-arrow-up"></i>
@@ -283,7 +283,7 @@
                         <i class="fas fa-eye"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-number" data-target="15642">0</span>
+                        <span class="stat-number" id="statAIDataPoints" data-target="15642">0</span>
                         <span class="stat-label">AI Data Points</span>
                     </div>
                     <div class="stat-live">
@@ -305,7 +305,7 @@
                         <button class="btn-icon"><i class="fas fa-expand"></i></button>
                     </div>
                 </div>
-                <div class="insights-grid">
+                <div class="insights-grid" id="aiInsightsGrid">
                     <div class="insight-card hot">
                         <div class="insight-glow"></div>
                         <div class="insight-icon"><i class="fas fa-fire"></i></div>

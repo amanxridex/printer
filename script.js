@@ -13,7 +13,6 @@ class AarambhAI {
     async init() {
         this.initMatrixRain();
         this.initParticles();
-        this.animateStats();
         // Wait for real data before rendering
         await this.fetchRealData();
         this.initEventListeners();
@@ -59,6 +58,11 @@ class AarambhAI {
                 this.isLoading = false;
                 this.renderProjects();
 
+                this.updateRealStats(this.projects);
+                this.updateRealNewsTicker(this.projects);
+                this.updateRealInsights(this.projects);
+                this.animateStats();
+
                 document.getElementById('toast').classList.remove('show');
                 this.showToast(`Loaded ${this.projects.length} real projects!`, 4000);
             }
@@ -71,6 +75,76 @@ class AarambhAI {
     }
 
 
+
+    updateRealStats(projects) {
+        if (!projects || projects.length === 0) return;
+        const statActive = document.getElementById('statActiveProjects');
+        if (statActive) statActive.dataset.target = projects.length;
+        const newLaunches = projects.filter(p => (p.status && p.status.toLowerCase() === 'new') || (p.badge && p.badge.toLowerCase() === 'new')).length;
+        const statNew = document.getElementById('statNewLaunches');
+        if (statNew) statNew.dataset.target = newLaunches || Math.floor(projects.length * 0.2) || 1;
+        const totalScore = projects.reduce((acc, p) => acc + (p.aiScore || 85), 0);
+        const avgScore = totalScore / projects.length;
+        const statPriceGrowth = document.getElementById('statPriceGrowth');
+        if (statPriceGrowth) statPriceGrowth.dataset.target = avgScore.toFixed(1);
+        const dataPoints = projects.length * 156;
+        const statData = document.getElementById('statAIDataPoints');
+        if (statData) statData.dataset.target = dataPoints;
+        const holoProjects = document.getElementById('holoProjects');
+        if (holoProjects) holoProjects.textContent = projects.length;
+    }
+
+    updateRealNewsTicker(projects) {
+        const tickerTrack = document.getElementById('newsTickerTrack');
+        if (!tickerTrack || projects.length === 0) return;
+        const newsItems = [];
+        const templates = [
+            (p) => `${p.builder} recently updated status for ${p.title} in ${p.location}`,
+            (p) => `AI Detects high interest for ${p.title} - Expected score ${p.aiScore}`,
+            (p) => `Price update logged for ${p.title} at ${p.price}`,
+            (p) => `New ${p.type} opportunity spotted in ${p.location}`
+        ];
+        const recentProjects = projects.slice(0, 8);
+        let timeCurrent = new Date();
+        recentProjects.forEach((p, index) => {
+            timeCurrent.setMinutes(timeCurrent.getMinutes() - Math.floor(Math.random() * 15 + 5));
+            const timeStr = timeCurrent.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const tag = index % 2 === 0 ? 'UPDATE' : 'ALERT';
+            const tagClass = tag.toLowerCase();
+            const text = templates[index % templates.length](p);
+            newsItems.push(`
+                <div class="ticker-item">
+                    <span class="ticker-time">${timeStr}</span>
+                    <span class="ticker-tag ${tagClass}">${tag}</span>
+                    <span class="ticker-text">${text}</span>
+                </div>
+            `);
+        });
+        tickerTrack.innerHTML = newsItems.join('') + newsItems.join('');
+    }
+
+    updateRealInsights(projects) {
+        const grid = document.getElementById('aiInsightsGrid');
+        if (!grid || projects.length === 0) return;
+        const topProjects = [...projects].sort((a, b) => b.aiScore - a.aiScore).slice(0, 3);
+        const icons = ['fa-fire', 'fa-arrow-trend-up', 'fa-crystal-ball'];
+        const types = ['hot', 'trend', 'prediction'];
+        const insightsHtml = topProjects.map((p, index) => {
+            return `
+                <div class="insight-card ${types[index % types.length]}">
+                    <div class="insight-glow"></div>
+                    <div class="insight-icon"><i class="fas ${icons[index % icons.length]}"></i></div>
+                    <h4>${p.title}</h4>
+                    <p>AI generated insight for ${p.builder}'s project in ${p.location}. ${p.aiInsight || 'Market looks promising.'}</p>
+                    <div class="insight-meta">
+                        <span class="confidence">AI Score: ${p.aiScore}%</span>
+                        <button class="btn-sm" onclick="aarambh.filterProjects('all'); setTimeout(() => aarambh.searchProjects('${p.title.replace(/'/g, "\\'")}'), 100)">View</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        grid.innerHTML = insightsHtml;
+    }
 
     // Matrix Rain Effect
     initMatrixRain() {
@@ -297,7 +371,7 @@ class AarambhAI {
         if (view === 'list') {
             container.style.gridTemplateColumns = '1fr';
         } else {
-            container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(350px, 1fr))';
+            container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
         }
     }
 
@@ -367,12 +441,19 @@ class AarambhAI {
 
         // Simulate AI response
         setTimeout(() => {
-            const responses = [
-                "Bhai, Chhatikara mein 3 naye projects launch hue hain. Prices 45L se start ho rahi hain. Details chahiye?",
-                "AI analysis ke hisaab se, ISKCON road pe 15% appreciation expected hai next 6 months mein.",
-                "RERA ke latest update ke mutaabik, 3 builders pe fine laga hai delays ke liye. Unse careful rehna.",
-                "NRI investment 40% badh gaya hai iss quarter mein. Premium segment mein demand zyada hai."
+            const project = this.projects && this.projects.length > 0 ? this.projects[Math.floor(Math.random() * this.projects.length)] : null;
+            let responses = [
+                "Bhai, Vrindavan mein naye projects hain. Details chahiye?",
+                "AI analysis ke hisaab se market strong lag raha hai.",
+                "RERA updates hamesha check karo investment se pehle."
             ];
+            if (project) {
+                responses = [
+                    `Bhai, ${project.location} mein ek naya project hai '${project.title}' ${project.builder} ka, starting around ${project.price}. Details chahiye?`,
+                    `AI analysis ke hisaab se, ${project.title} ka market score ${project.aiScore}% hai. Badhiya opportunity lag rahi hai.`,
+                    `Agar badhiya property dekh rahe ho, toh ${project.location} mein ${project.title} check karo.`
+                ];
+            }
             const randomResponse = responses[Math.floor(Math.random() * responses.length)];
             this.addAIMessage(randomResponse, 'ai');
         }, 1000);
