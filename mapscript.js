@@ -372,6 +372,25 @@ class VrindavanMapController {
         document.getElementById('detailPanel').classList.remove('active');
     }
 
+    calculateCachedScore(project) {
+        if (project.cachedAIscore) return project.cachedAIscore;
+        let hash = 0;
+        const str = project.title + project.id;
+        for (let i = 0; i < str.length; i++) hash = Math.imul(31, hash) + str.charCodeAt(i) | 0;
+        const rnd = () => { hash = Math.sin(hash) * 10000; return hash - Math.floor(hash); };
+        const targetScore = project.aiScore || 80;
+        const offset = () => Math.floor((rnd() - 0.5) * 14);
+
+        project.cachedAIscore = Math.round(
+            Math.min(100, Math.max(0, targetScore + offset())) * 0.25 +
+            Math.min(100, Math.max(0, targetScore + offset())) * 0.20 +
+            Math.min(100, Math.max(0, targetScore + offset())) * 0.25 +
+            Math.min(100, Math.max(0, targetScore + offset())) * 0.20 +
+            Math.min(100, Math.max(0, targetScore + offset())) * 0.10
+        );
+        return project.cachedAIscore;
+    }
+
     generateAIAnalysisHTML(project) {
         // Deterministic random based on project ID for consistent realistic numbers
         let hash = 0;
@@ -392,18 +411,16 @@ class VrindavanMapController {
         const priceScore = Math.min(100, Math.max(0, targetScore + offset()));
         const projectScore = Math.min(100, Math.max(0, targetScore + offset()));
 
-        const finalScore = Math.round(
-            sentimentScore * 0.25 +
-            developerScore * 0.20 +
-            locationScore * 0.25 +
-            priceScore * 0.20 +
-            projectScore * 0.10
-        );
+        const finalScore = this.calculateCachedScore(project);
 
         let recommendation = "HOLD";
         if (finalScore >= 85) recommendation = "STRONG BUY";
         else if (finalScore >= 75) recommendation = "BUY";
         else if (finalScore < 60) recommendation = "AVOID";
+
+        // Realism adjustment for Vrindavan/Mathura missing metro
+        const isVrindavanArea = project.location.toLowerCase().includes('vrindavan') || project.location.toLowerCase().includes('mathura');
+        const metroText = isVrindavanArea ? 'Not Available' : `${(rnd() * 5 + 0.5).toFixed(1)}km away`;
 
         // Generate specific realistic values
         const newsPos = Math.floor(rnd() * 15 + 5);
@@ -411,7 +428,7 @@ class VrindavanMapController {
         const onTimePct = Math.floor(rnd() * 20 + 75);
         const metroDist = (rnd() * 5).toFixed(1);
         const apprec = Math.floor(rnd() * 10 + 5);
-        const psf = project.price.includes('L') || project.price.includes('Cr') ? parseInt(project.price) || 4500 : 4500;
+        const psf = project.price.includes('L') || project.price.includes('Cr') ? 4500 : 4500;
         const completion = Math.floor(rnd() * 90 + 10);
 
         return `
@@ -465,7 +482,7 @@ class VrindavanMapController {
                         <span class="metric-score">${locationScore}/100 <small>25%</small></span>
                     </div>
                     <ul class="metric-list">
-                        <li><span>Metro:</span> <span>${metroDist}km away</span></li>
+                        <li><span>Metro:</span> <span>${metroText}</span></li>
                         <li><span>Apprec:</span> <span class="trend-up">+${apprec}% YoY</span></li>
                         <li><span>Nearby:</span> <span>${Math.floor(rnd() * 5 + 2)} new projects</span></li>
                         <li><span>Safety:</span> <span>High</span></li>
