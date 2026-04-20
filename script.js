@@ -371,7 +371,7 @@ class AarambhAI {
         if (view === 'list') {
             container.style.gridTemplateColumns = '1fr';
         } else {
-            container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
+            container.style.gridTemplateColumns = '';
         }
     }
 
