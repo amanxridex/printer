@@ -49,6 +49,10 @@ class AarambhAI {
                     badge: p.badge || 'new',
                     badgeText: (p.badge || 'NEW').toUpperCase(),
                     image: (p.images && p.images.length > 0) ? p.images[0] : 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800',
+                    launchDate: p.launchDate,
+                    completionDate: p.completionDate,
+                    reraNumber: p.reraNumber,
+                    link: p.link,
                     aiScore: p.aiScore || Math.floor(Math.random() * 15) + 80,
                     aiInsight: p.description || "Live data insights dynamically loaded.",
                     trending: Math.random() > 0.5
@@ -321,7 +325,7 @@ class AarambhAI {
                         <span class="price-label">Starting from</span>
                         <span class="price-value">${project.price}</span>
                     </div>
-                    <button class="btn-view" onclick="window.open('${project.link || '#'}', '_blank')">View Details</button>
+                    <button class="btn-view" onclick="openProjectDetailsModal(${project.id})">View Details</button>
                 </div>
             </div>
         `;
@@ -517,6 +521,8 @@ const aarambh = new AarambhAI();
 // Global functions for HTML onclick
 function openModal() { aarambh.openModal(); }
 function closeModal() { aarambh.closeModal(); }
+function openProjectDetailsModal(projectId) { aarambh.openProjectDetails(projectId); }
+function closeProjectDetailsModal() { aarambh.closeProjectDetails(); }
 function submitProject(e) { aarambh.submitProject(e); }
 function filterProjects(cat) { aarambh.filterProjects(cat); }
 function setView(view) { aarambh.setView(view); }

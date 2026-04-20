@@ -516,6 +516,62 @@
         </div>
     </div>
 
+    <!-- Project Details Modal -->
+    <div class="modal-cyber" id="projectDetailsModal">
+        <div class="modal-overlay" onclick="closeProjectDetailsModal()"></div>
+        <div class="modal-content-cyber" style="max-width: 600px;">
+            <div class="modal-header-cyber">
+                <h3 id="detailTitle">PROJECT DETAILS</h3>
+                <button class="close-btn" onclick="closeProjectDetailsModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body-cyber" style="padding: 1.5rem;">
+                
+                <div class="detail-hero" id="detailHero" style="height: 200px; background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop') center/cover; border-radius: 8px; margin-bottom: 1.5rem; position: relative;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); border-radius: 0 0 8px 8px;">
+                        <span class="badge-cyber" id="detailStatus" style="font-size: 0.8rem; padding: 0.3rem 0.6rem;">Status</span>
+                    </div>
+                </div>
+
+                <div class="detail-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    
+                    <div class="detail-card" style="background: rgba(10, 15, 30, 0.6); padding: 1rem; border-radius: 8px; border: 1px solid rgba(0, 243, 255, 0.1);">
+                        <div style="font-size: 0.75rem; color: #8892b0; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 1px;">Developer</div>
+                        <div id="detailDeveloper" style="color: #fff; font-weight: 500; font-size: 0.95rem;">-</div>
+                    </div>
+
+                    <div class="detail-card" style="background: rgba(10, 15, 30, 0.6); padding: 1rem; border-radius: 8px; border: 1px solid rgba(0, 243, 255, 0.1);">
+                        <div style="font-size: 0.75rem; color: #8892b0; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 1px;">Location</div>
+                        <div id="detailLocation" style="color: #fff; font-weight: 500; font-size: 0.95rem;">-</div>
+                    </div>
+
+                    <div class="detail-card" style="background: rgba(10, 15, 30, 0.6); padding: 1rem; border-radius: 8px; border: 1px solid rgba(0, 243, 255, 0.1);">
+                        <div style="font-size: 0.75rem; color: #8892b0; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 1px;">Launch Date</div>
+                        <div id="detailLaunch" style="color: #fff; font-weight: 500; font-size: 0.95rem;">-</div>
+                    </div>
+
+                    <div class="detail-card" style="background: rgba(10, 15, 30, 0.6); padding: 1rem; border-radius: 8px; border: 1px solid rgba(0, 243, 255, 0.1);">
+                        <div style="font-size: 0.75rem; color: #8892b0; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 1px;">Completion Date</div>
+                        <div id="detailCompletion" style="color: #fff; font-weight: 500; font-size: 0.95rem;">-</div>
+                    </div>
+                </div>
+
+                <div class="detail-card" style="background: rgba(10, 15, 30, 0.6); padding: 1rem; border-radius: 8px; border: 1px solid rgba(0, 243, 255, 0.1); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 0.75rem; color: #8892b0; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 1px;">RERA ID</div>
+                        <div id="detailRera" style="color: #00f3ff; font-weight: 600; font-size: 1.1rem; letter-spacing: 1px;">-</div>
+                    </div>
+                    <i class="fas fa-check-circle" style="color: #00f3ff; font-size: 1.5rem; opacity: 0.8;"></i>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <a id="detailSourceLink" href="#" target="_blank" class="btn-cyber" style="flex: 1; text-align: center; text-decoration: none; padding: 0.8rem;">
+                        <i class="fas fa-external-link-alt" style="margin-right: 0.5rem;"></i> View Source
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast -->
     <div class="toast-cyber" id="toast">
         <div class="toast-icon"><i class="fas fa-check"></i></div>
