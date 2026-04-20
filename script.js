@@ -321,7 +321,7 @@ class AarambhAI {
                         <span class="price-label">Starting from</span>
                         <span class="price-value">${project.price}</span>
                     </div>
-                    <button class="btn-view">View Details</button>
+                    <button class="btn-view" onclick="window.open('${project.link || '#'}', '_blank')">View Details</button>
                 </div>
             </div>
         `;
