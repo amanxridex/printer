@@ -354,6 +354,18 @@ class AarambhAI {
         this.renderProjects();
     }
 
+    // Filter By Location Dropdown
+    filterByLocation(location) {
+        if (location === 'all') {
+            this.filteredProjects = [...this.projects];
+        } else {
+            this.filteredProjects = this.projects.filter(p => 
+                p.location && p.location.toLowerCase().includes(location.toLowerCase())
+            );
+        }
+        this.renderProjects();
+    }
+
     // Search Projects
     searchProjects(query) {
         const lowerQuery = query.toLowerCase();
@@ -525,6 +537,7 @@ function openProjectDetailsModal(projectId) { aarambh.openProjectDetails(project
 function closeProjectDetailsModal() { aarambh.closeProjectDetails(); }
 function submitProject(e) { aarambh.submitProject(e); }
 function filterProjects(cat) { aarambh.filterProjects(cat); }
+function filterByLocation(loc) { aarambh.filterByLocation(loc); }
 function setView(view) { aarambh.setView(view); }
 function loadMore() {
     const btn = event.target;

@@ -360,12 +360,12 @@
                 </div>
 
                 <div class="advanced-filters">
-                    <select class="cyber-select">
-                        <option>All Locations</option>
-                        <option>Vrindavan</option>
-                        <option>Mathura</option>
-                        <option>Chhatikara</option>
-                        <option>Govardhan</option>
+                    <select class="cyber-select" id="locationFilter" onchange="filterByLocation(this.value)">
+                        <option value="all">All Locations</option>
+                        <option value="vrindavan">Vrindavan</option>
+                        <option value="mathura">Mathura</option>
+                        <option value="chhatikara">Chhatikara</option>
+                        <option value="govardhan">Govardhan</option>
                     </select>
                     <select class="cyber-select">
                         <option>Price Range</option>
