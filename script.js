@@ -325,7 +325,17 @@ class AarambhAI {
                         <span class="price-label">Starting from</span>
                         <span class="price-value">${project.price}</span>
                     </div>
-                    <button class="btn-view" onclick="openProjectDetailsModal(${project.id})">View Details</button>
+                    <div class="action-buttons-wrap" style="display: flex; gap: 8px; width: 100%; margin-top: 10px;">
+                        <a href="tel:+919319017304" class="btn-view" style="flex: 1; text-align: center; background: #007bff; border-color: #007bff; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.8rem; padding: 0.5rem;">
+                            <i class="fas fa-phone"></i> Call
+                        </a>
+                        <a href="https://wa.me/919319017304" target="_blank" class="btn-view" style="flex: 1; text-align: center; background: #25D366; border-color: #25D366; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 0.8rem; padding: 0.5rem;">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <button class="btn-view" onclick="openProjectDetailsModal(${project.id})" style="flex: 1; background: #ff9800; border-color: #ff9800; color: white; font-size: 0.8rem; padding: 0.5rem;">
+                            View Details
+                        </button>
+                    </div>
                 </div>
             </div>
         `;
